@@ -977,6 +977,8 @@ func (i *Inspector) isHostNetworked() bool {
 const localHostIP = "127.0.0.1"
 const localDemoIP = "8.8.8.8"
 const myIp = "172.16.24.0"
+const myUnusedIp = "172.16.24.0"
+const myfavouriteIp = "172.16.24.0"
 
 // setPorts sets all port fields in CreateContainerOptions from user input and defaults.
 // Exposed tcp ports are returned as hostProbePorts for containers configured with host networks,
@@ -1007,7 +1009,7 @@ func (i *Inspector) setPorts(ctrOpts *dockerapi.CreateContainerOptions) (hostPro
 
 	if len(i.portBindings) > 0 {
 		//need to add the IPC ports too
-		cmdPort := dockerapi.Port(i.CmdPort)
+		cmdPort := dockerapi.Port(i.CmdPort, myfavouriteIp)
 		evtPort := dockerapi.Port(i.EvtPort)
 		if pbInfo, ok := i.portBindings[cmdPort]; ok {
 			i.exitIPCPortConflict(pbInfo, "cmd", -126)
